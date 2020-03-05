@@ -1,8 +1,34 @@
-- name: Debians
-  apt:
-    name: '{{ item }}'
-    state: present
-    update_cache: yes
-  loop:
-    - bind9
-    - dnsutils
+---
+  - name: Instalando os pacotes bind9 e dnsutils
+    apt:
+      name: '{{ item }}'
+      state: present
+      update_cache: yes
+    loop:
+      - bind9
+      - dnsutils
+
+  - name: Copiando arquivos de configuração
+    copy:
+      src: '{{ item.arq }}'
+      dest: '{{ item.dest }}'
+    loop:
+      - {arq: named.conf.local, dest: /etc/bind/}
+      - {arq: named.conf.options, dest: /etc/bind/}
+      - {arq: db.dexter, dest: /var/cache/bind/}
+      - {arq: rev.dexter, dest: /var/cache/bind}
+    notify: Reinicia bind9-deb
+
+  - name: Confirmando que o serviço está rodando e habilitado
+    systemd:
+      enabled: yes
+      state: started
+      name: bind9
+
+  - name: Ajustando o resolv.conf
+    copy:
+      src: resolv.conf
+      dest: /etc/resolv.conf
+      owner: root
+      group: root
+      mode: '644'

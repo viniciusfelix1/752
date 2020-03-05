@@ -1,0 +1,4 @@
+  - name: Reinicia bind9-deb
+    systemd:
+      state: restarted
+      name: bind9

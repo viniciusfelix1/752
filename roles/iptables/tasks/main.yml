@@ -1,9 +1,4 @@
 ---
-  # - name: Verificando se o arquivo de configuração é existente.
-  #   stat:
-  #     path: /etc/iptables/rules.v4
-  #   register: config
-
   - name: Instalando pacote 'iptables-persistent'
     apt:
       name: iptables-persistent
@@ -26,3 +21,5 @@
       enabled: yes
       state: started
       name: netfilter-persistent
+
+  - include_tasks: dns-client.yml
