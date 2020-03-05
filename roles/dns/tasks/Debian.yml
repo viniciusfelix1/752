@@ -1,0 +1,8 @@
+- name: Debians
+  apt:
+    name: '{{ item }}'
+    state: present
+    update_cache: yes
+  loop:
+    - bind9
+    - dnsutils

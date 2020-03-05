@@ -1,0 +1,28 @@
+---
+  # - name: Verificando se o arquivo de configuração é existente.
+  #   stat:
+  #     path: /etc/iptables/rules.v4
+  #   register: config
+
+  - name: Instalando pacote 'iptables-persistent'
+    apt:
+      name: iptables-persistent
+      state: present
+
+  - name: Copiando arquivo de regras
+    copy:
+      src: rules.v4
+      dest: /etc/iptables/rules.v4
+
+  - name: Ajustando arquivo de serviço
+    replace:
+      path: /lib/systemd/system/netfilter-persistent.service
+      regexp: stop$
+      replace: flush
+    notify: Reinicia iptables
+
+  - name: Confirmando que o serviço está rodando e habilitado
+    systemd:
+      enabled: yes
+      state: started
+      name: netfilter-persistent

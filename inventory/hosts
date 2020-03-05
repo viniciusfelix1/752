@@ -1,0 +1,11 @@
+security ansible_host=200.100.50.100 ansible_port=22
+storage ansible_host=200.100.50.100 ansible_port=52000
+proxy ansible_host=200.100.50.100 ansible_port=55000
+mail ansible_host=200.100.50.100 ansible_port=56000
+
+[devops]
+172.16.100.207
+
+[web]
+webserver01 ansible_host=200.100.50.100 ansible_port=53000
+webserver02 ansible_host=200.100.50.100 ansible_port=54000

@@ -1,0 +1,7 @@
+---
+# handlers file for 752
+  - name: Reinicia iptables
+    systemd:
+      state: restarted
+      daemon_reload: yes
+      name: netfilter-persistent

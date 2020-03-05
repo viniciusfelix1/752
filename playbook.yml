@@ -1,0 +1,14 @@
+---
+  - name: Sobe o serviço de iptables na máquina security.
+    hosts: security
+    roles:
+      - iptables
+    tags:
+      - iptables
+
+  - name: Sobe o serviço bind nos servidores web
+    hosts: web
+    roles:
+      - dns
+    tags:
+      - dns
