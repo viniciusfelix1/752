@@ -2,3 +2,8 @@
     systemd:
       state: restarted
       name: bind9
+
+  - name: Reinicia bind9-centos
+    systemd:
+      state: restarted
+      name: named

@@ -1,3 +1,28 @@
-- name: CentOS
-  debug:
-    var: ansible_distribution
+---
+  - name: Instalando os pacotes bind e bind-utils
+    yum:
+      name: '{{ item }}'
+      state: present
+    loop:
+      - bind
+      - bind-utils
+
+  - name: Copiando arquivo de configuração
+    copy:
+      src: named.conf
+      dest: /etc/named.conf
+    notify: Reinicia bind9-centos
+
+  - name: Ajustando o resolv.conf
+    copy:
+      src: resolv.conf
+      dest: /etc/resolv.conf
+      owner: root
+      group: root
+      mode: '644'
+
+  - name: Confirmando que o serviço está rodando e habilitado
+    systemd:
+      enabled: yes
+      state: started
+      name: named
