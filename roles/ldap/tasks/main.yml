@@ -1,0 +1,22 @@
+---
+  - name: Ajustando o resolv.conf
+    copy:
+      src: resolv.conf
+      dest: /etc/resolv.conf
+      owner: root
+      group: root
+      mode: '644'
+
+  - name: Instalando pacotes slapd e ldap-utils
+    apt:
+      name: '{{ item }}'
+      state: present
+      update_cache: yes
+    loop:
+      - slapd
+      - ldap-utils
+
+  - name: Copiando arquivos para /opt/
+    copy:
+      src: ldap/
+      dest: /opt/ldap/

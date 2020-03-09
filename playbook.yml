@@ -12,3 +12,10 @@
       - dns
     tags:
       - dns
+
+  - name: Sobe serviço ldap
+    hosts: storage
+    roles:
+      - ldap
+    tags:
+      - ldap
